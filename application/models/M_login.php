@@ -5,8 +5,16 @@ class M_login extends CI_Model {
     public function __construct() {
         parent::__construct();
     }
-    public function cek_login($username, $password) {
-        return $this->db->where('username', $username)->where('password', $password)->get('user')->result();
+    function cek_login($username)
+    {
+       $result = $this->db->query("SELECT * FROM user WHERE username='$username' LIMIT 1");
+       return $result;
+    }
+
+    function cek_password($username, $password)
+    {
+        $result = $this->db->query("SELECT * FROM user WHERE username='$username' AND password=md5('$password') LIMIT 1");
+        return $result;
     }
 
     public function getDataUserByName($username) {

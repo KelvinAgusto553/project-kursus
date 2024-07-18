@@ -11,7 +11,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?= base_url('assets/admin') ?>/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">Alexander Pierce</a>
@@ -63,6 +63,15 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-header">COURSE MANAGEMENT</li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/kursus') ?>" class="nav-link">
+              <i class="nav-icon fa fa-book"></i>
+              <p>
+                Data Kursus
+              </p>
+            </a>
           </li>
           <li class="nav-header">MENU</li>
           <li class="nav-item">

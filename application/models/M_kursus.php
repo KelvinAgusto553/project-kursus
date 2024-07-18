@@ -1,20 +1,20 @@
 <?php
 defined("BASEPATH") or exit("No direct script access allowed");
 
-class M_user extends CI_Model
+class M_kursus extends CI_Model
 {
     public function __construct() {
         parent::__construct();
     }
 
-    function tampil_data_user()
+    function tampil_data_kursus()
     {
-        return $this->db->get('user')->result_array();
+        return $this->db->get('data_kursus')->result_array();
     }
 
-    function insert_user($data)
+    function insert_kursus($data)
     {
-        return $this->db->insert('user', $data);
+        return $this->db->insert('data_kursus', $data);
     }
 
     function uploadImage() {

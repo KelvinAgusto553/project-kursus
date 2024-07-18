@@ -32,25 +32,39 @@ class Auth extends CI_Controller {
         return $messageAlert;
     }
 
-    public function login() {
+    function login()
+    {
         $username = $this->input->post('username');
-        $password = md5($this->input->post('password'));
-        if ($username && $password) {
-            $loginKaryawan = $this->m_login->cek_login($username, $password);
-            if ($loginKaryawan[0]->id !== null) {
-                $getDataUser = $this->m_login->getDataUserByName($username);
-                $this->session->set_userdata('id', $getDataUser[0]->id_user);
-                $this->session->set_userdata('name', $getDataUser[0]->name);
+        $nama_lengkap = $this->input->post('nama_lengkap');
+        $password = $this->input->post('password');
+
+        $validasi_email = $this->m_login->cek_login($username, $password);
+        if($validasi_email->num_rows() > 0) {
+            $validate_ps = $this->m_login->cek_password($username, $password);
+            $x = $validate_ps->row_array();
+            if($x['status'] == '1') {
+                $this->session->set_userdata('logged', TRUE);
                 $this->session->set_userdata('username', $username);
-                $this->session->set_userdata('role', $loginKaryawan[0]->role);
-                redirect('admin');
-            }else{
-                $this->session->set_flashdata('messageAlert', $this->messageAlert('error', 'Login gagal'));
-                redirect();
+                $id=$x['id'];
+                if($x['role'] == 'admin') {
+                    $username = $x['username'];
+                    $nama_lengkap = $x['nama_lengkap'];
+                    $this->session->set_userdata('id', $id);
+                    $this->session->set_userdata('username', $username);
+                    $this->session->set_userdata('nama_lengkap', $nama_lengkap);
+                    redirect('admin');
+                } 
+            } else {
+                $url=base_url('auth');
+                echo $this->session->set_flashdata->messageAlert('error');
+                redirect($url);
             }
-        }else{
-            $this->session->set_flashdata('messageAlert', $this->messageAlert('error', 'Login gagal'));
-            redirect();
+        } else {
+            $url=base_url('auth');
+                echo $this->session->set_flashdata('msg','<span onclick="this.parentElement.style.display=`none`" class="w3-button w3-large w3-display-topright">&times;</span>
+                    <h3>Uupps!</h3>
+                    <p>Password yang kamu masukan salah.</p>');
+                redirect($url);
         }
     }
 }

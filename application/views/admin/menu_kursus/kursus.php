@@ -30,20 +30,16 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Nama Lengkap</th>
-            <th>Username</th>
-            <th>Jabatan</th>
+            <th>Nama Kurus</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <?php $no = 1;
-          foreach ($users as $user) { ?>
+          foreach ($kursuss as $kursus) { ?>
             <tr>
               <td><?= $no; ?></td>
-              <td><?= $user['username']; ?></td>
-              <td><?= $user['role']; ?></td>
-              <td><?= $user['image']; ?></td>
+              <td><?= $kursus['nama_kursus']; ?></td>
               <td>
                 <div class="btn-group">
                   <button type="button" class="btn btn-info">Action</button>

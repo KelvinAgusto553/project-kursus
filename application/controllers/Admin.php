@@ -7,6 +7,7 @@ class Admin extends CI_Controller {
 
         $this->load->model('m_dashboard');
         $this->load->model('m_user');
+        $this->load->model('m_kursus');
     }
 
     public function index()
@@ -23,14 +24,49 @@ class Admin extends CI_Controller {
     public function user()
     {
         $data['users'] = $this->m_user->tampil_data_user();
-
-        $data['keyword'] = $this->input->get('keyword');
-        $data['search_result'] = $this->m_user->search($data['keyword']);
+        $data['data_user'] = $this->m_user->tampil_data_user();
 
         $this->load->view('admin/layout/header');
         $this->load->view('admin/layout/navbar');
         $this->load->view('admin/layout/sidebar');
         $this->load->view('admin/menu/menu_user', $data);
+        $this->load->view('admin/layout/footer');
+    }
+
+    public function tambah_user()
+    {
+        $this->load->view('admin/layout/header');
+        $this->load->view('admin/layout/navbar');
+        $this->load->view('admin/layout/sidebar');
+        $this->load->view('admin/menu/tambah_user');
+        $this->load->view('admin/layout/footer');
+    }
+
+    public function insert_user()
+    {
+        $username = $this->input->post('username', true);
+        $password = md5($this->input->post('password', true));
+        $role = $this->input->post('role', true);
+        $image = $this->m_user->uploadImage();
+
+        $data = array(
+            'username' => $username,
+            'password' => $password,
+            'role' => $role,
+            'image' => $image['file']['file_name']
+        );
+        $this->m_user->insert_user($data);
+        redirect('admin/user');
+    }
+
+    public function kursus()
+    {
+        $data['kursuss'] = $this->m_kursus->tampil_data_kursus();
+
+        $this->load->view('admin/layout/header');
+        $this->load->view('admin/layout/navbar');
+        $this->load->view('admin/layout/sidebar');
+        $this->load->view('admin/menu_kursus/kursus', $data);
         $this->load->view('admin/layout/footer');
     }
 
